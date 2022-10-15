@@ -17,11 +17,11 @@ data.push = (from, to) => {
 data.rotate = (container, isReverse) => {
 	if (container.length < 2)
 		return;
-	const temp = isReverse ? container.shift() : container.unshift();
+	const temp = isReverse ? container.shift() : container.pop();
 	if (isReverse)
-		container.unshift(temp);
-	else
 		container.push(temp);
+	else
+		container.unshift(temp);
 }
 
 data.a = [];
