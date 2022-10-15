@@ -1,5 +1,5 @@
 const data = {};
-data.data.swap = (container) => {
+data.swap = (container) => {
 
 }
 
