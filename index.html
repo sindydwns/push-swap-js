@@ -1,12 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>push_swap</title>
+    <script src="/push-swap-js/phaser.js"></script>
 </head>
 <body style="background-color:black">
 <script type="module">
-	import data from "/push-swap-js/data.mjs";
-	console.log(data);
+    import data from "/push-swap-js/data.mjs";
+    const stage = {
+        width: window.innerWidth,
+        height: window.innerHeight,
+        length: 0,
+    }
+    const random = size => {
+        const array = Array.from(Array(size).keys());
+        return array.sort((a, b) => 0.5 - Math.random());
+    }
+    data.a = random(10);
+    stage.length = data.a.length;
+	const config = {
+        type: Phaser.AUTO,
+        width: window.innerWidth - 20,
+        height: window.innerHeight - 20,
+        scene: {
+            create: create,
+            update: update
+        }
+    };
+	const nodeStyle = {color: 0xbbbbbb, alpha: 200 / 255};
+    const lineStyle = {width: 5, color: 0xaaaaaa};
+    
+    let game = new Phaser.Game(config);
+	let graphics;
+
+	function create() {
+		graphics = this.add.graphics({ lineStyle, fillStyle: nodeStyle});
+	}
+
+	function update() {
+        graphics.clear();
+
+        if (stage.length == 0)
+            return;
+
+        const margin = 0;
+        const totalHeight = stage.height * 0.7;
+        const nodeHeight = totalHeight / stage.length;
+        const nodeWight = stage.width * 0.2;
+        const baseHeight = stage.height * 0.9 - nodeHeight * 0.5;
+        const baseWidthA = stage.width * 0.5 - nodeWight * 1.5;
+        const baseWidthB = stage.width * 0.5 + nodeWight * 0.5;
+        for (let idx in data.a) {
+            const v = data.a[idx] / stage.length * 0.7;
+            graphics.fillStyle(0x00ff00, 0.2 + v);
+            graphics.fillRect(baseWidthA, baseHeight - idx * nodeHeight, nodeWight, nodeHeight);
+        }
+        for (let idx in data.b) {
+            const v = data.b[idx] / stage.length * 0.7;
+            graphics.fillStyle(0x00ff00, 0.2 + v);
+            graphics.fillRect(baseWidthB, baseHeight - idx * nodeHeight, nodeWight, nodeHeight);
+        }
+	}
 </script>
+	
 </body>
 </html>
