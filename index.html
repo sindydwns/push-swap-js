@@ -80,13 +80,29 @@
         stage.length = data.a.length;
     }
     
-    window.cmds = function cmds(str) {
-        const commands = str.split(" ");
-        for (let cmd of commands) {
-            if (cmdMap[cmd])
-                cmdMap[cmd]();
-            else
-                console.error(`error: not define cmd [${cmd}]`);
+    window.cmds = async function cmds(strOrFunc, timer) {
+        if (typeof(strOrFunc) === "string") {
+            const commands = strOrFunc.split(" ");
+            for (let cmd of commands) {
+                if (cmdMap[cmd])
+                    cmdMap[cmd]();
+                else {
+                    console.error(`error: not define cmd [${cmd}]`);
+                    return ;
+                }
+                await new Promise(x => setTimeout(x, +timer ?? 0));
+            }
+        } else {
+            const func = strOrFunc;
+            for (let cmd = func(data.a, data.b); cmd != null; cmd = func(data.a, data.b)) {
+                if (cmdMap[cmd])
+                    cmdMap[cmd]();
+                else {
+                    console.error(`error: not define cmd [${cmd}]`);
+                    return ;
+                }
+                await new Promise(x => setTimeout(x, +timer ?? 0));
+            }
         }
     }
 
