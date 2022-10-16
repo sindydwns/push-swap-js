@@ -28,7 +28,7 @@ data.a = [];
 data.b = [];
 data.sa = () => data.swap(data.a);
 data.sb = () => data.swap(data.b);
-data.ss = () => data.swap(data.a) & data.swap(b);
+data.ss = () => data.swap(data.a) & data.swap(data.b);
 data.pa = () => data.push(data.b, data.a);
 data.pb = () => data.push(data.a, data.b);
 data.ra = () => data.rotate(data.a, false);
