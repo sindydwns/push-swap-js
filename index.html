@@ -11,12 +11,6 @@
         height: window.innerHeight,
         length: 0,
     }
-    const random = size => {
-        const array = Array.from(Array(size).keys());
-        return array.sort((a, b) => 0.5 - Math.random());
-    }
-    data.a = random(10);
-    stage.length = data.a.length;
 	const config = {
         type: Phaser.AUTO,
         width: window.innerWidth - 20,
@@ -34,6 +28,23 @@
 
 	function create() {
 		graphics = this.add.graphics({ lineStyle, fillStyle: nodeStyle});
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N).on("down", (key, e) => {
+            const size = prompt("size ?", "10");
+            if (+size > 0) {
+                init(+size);
+            }
+        });
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE).on("down", data.sa);
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO).on("down", data.sb);
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE).on("down", data.ss);
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q).on("down", data.pa);
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W).on("down", data.pb);
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A).on("down", data.ra);
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S).on("down", data.rb);
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D).on("down", data.rr);
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z).on("down", data.rra);
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X).on("down", data.rrb);
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C).on("down", data.rrr);
 	}
 
 	function update() {
@@ -59,7 +70,7 @@
             graphics.fillStyle(0x00ff00, 0.2 + v);
             graphics.fillRect(baseWidthB, baseHeight - idx * nodeHeight, nodeWight, nodeHeight);
         }
-	}
+    }
 
     const cmdMap = {
         sa: data.sa,
@@ -76,40 +87,45 @@
     }
 
     window.init = function init(size) {
-        data.a = random(size);
+        const array = Array.from(Array(size).keys());
+        data.a = array.sort((a, b) => 0.5 - Math.random());
+        data.b = [];
         stage.length = data.a.length;
     }
     
     window.cmds = async function cmds(strOrFunc, timer) {
+        let cnt = 0;
         if (typeof(strOrFunc) === "string") {
             const commands = strOrFunc.split(" ");
             for (let cmd of commands) {
-                if (cmdMap[cmd])
+                if (cmdMap[cmd]) {
+                    cnt++;
                     cmdMap[cmd]();
+                }
                 else {
                     console.error(`error: not define cmd [${cmd}]`);
-                    return ;
+                    return -1;
                 }
                 await new Promise(x => setTimeout(x, +timer ?? 0));
             }
         } else {
             const func = strOrFunc;
             for (let cmd = func(data.a, data.b); cmd != null; cmd = func(data.a, data.b)) {
-                if (cmdMap[cmd])
+                if (cmdMap[cmd]) {
+                    cnt++;
                     cmdMap[cmd]();
+                }
                 else {
                     console.error(`error: not define cmd [${cmd}]`);
-                    return ;
+                    return -1;
                 }
                 await new Promise(x => setTimeout(x, +timer ?? 0));
             }
         }
+        return cnt++;
     }
 
-    const size = prompt("size ?", "10");
-    if (+size > 0) {
-        init(+size);
-    }
+    init(500);
 </script>
 	
 </body>
