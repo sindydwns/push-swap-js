@@ -106,7 +106,8 @@
                     console.error(`error: not define cmd [${cmd}]`);
                     return -1;
                 }
-                await new Promise(x => setTimeout(x, +timer ?? 0));
+                if (+timer > 0 || cnt % 1000 == 0)
+                    await new Promise(x => setTimeout(x, +timer ?? 0));
             }
         } else {
             const func = strOrFunc;
@@ -121,7 +122,8 @@
                         console.error(`error: not define cmd [${cmd}]`);
                         return -1;
                     }
-                    await new Promise(x => setTimeout(x, +timer ?? 0));
+                    if (+timer > 0 || cnt % 1000 == 0)
+                        await new Promise(x => setTimeout(x, +timer ?? 0));
                 }
             }
         }
