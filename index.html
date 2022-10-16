@@ -63,12 +63,12 @@
         for (let idx in data.a) {
             const v = data.a[idx] / stage.length * 0.7;
             graphics.fillStyle(0x00ff00, 0.2 + v);
-            graphics.fillRect(baseWidthA, baseHeight - idx * nodeHeight, nodeWight, nodeHeight);
+            graphics.fillRect(baseWidthA, baseHeight - idx * nodeHeight, nodeWight * v + 10, nodeHeight);
         }
         for (let idx in data.b) {
             const v = data.b[idx] / stage.length * 0.7;
             graphics.fillStyle(0x00ff00, 0.2 + v);
-            graphics.fillRect(baseWidthB, baseHeight - idx * nodeHeight, nodeWight, nodeHeight);
+            graphics.fillRect(baseWidthB, baseHeight - idx * nodeHeight, nodeWight * v + 10, nodeHeight);
         }
     }
 
@@ -111,7 +111,7 @@
             }
         } else {
             const func = strOrFunc;
-            for (let cmds = func(data.a, data.b); cmds != null; cmds = func(data.a, data.b)) {
+            for (let cmds = func(data.a, data.b); cmds != null && cmds != ""; cmds = func(data.a, data.b)) {
                 const commands = cmds.split(" ");
                 for (let cmd of commands) {
                     if (cmdMap[cmd]) {
