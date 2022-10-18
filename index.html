@@ -5,7 +5,8 @@
 </head>
 <body style="background-color:black">
 <script type="module">
-    import data from "/push-swap-js/data.mjs";
+    import Data from "/push-swap-js/data.mjs";
+    const data = new Data([], []);
     const stage = {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -73,17 +74,17 @@
     }
 
     const cmdMap = {
-        sa: data.sa,
-        sb: data.sb,
-        ss: data.ss,
-        pa: data.pa,
-        pb: data.pb,
-        ra: data.ra,
-        rb: data.rb,
-        rr: data.rr,
-        rra: data.rra,
-        rrb: data.rrb,
-        rrr: data.rrr,
+        sa: () => data.sa(),
+        sb: () => data.sb(),
+        ss: () => data.ss(),
+        pa: () => data.pa(),
+        pb: () => data.pb(),
+        ra: () => data.ra(),
+        rb: () => data.rb(),
+        rr: () => data.rr(),
+        rra: () => data.rra(),
+        rrb: () => data.rrb(),
+        rrr: () => data.rrr(),
     }
 
     window.init = function init(size) {
@@ -137,6 +138,8 @@
         }
         return true;
     }
+
+    window.Data = Data;
 
     init(500);
 </script>
