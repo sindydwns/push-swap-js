@@ -35,17 +35,17 @@
                 init(+size);
             }
         });
-        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE).on("down", data.sa);
-        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO).on("down", data.sb);
-        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE).on("down", data.ss);
-        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q).on("down", data.pa);
-        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W).on("down", data.pb);
-        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A).on("down", data.ra);
-        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S).on("down", data.rb);
-        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D).on("down", data.rr);
-        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z).on("down", data.rra);
-        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X).on("down", data.rrb);
-        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C).on("down", data.rrr);
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE).on("down", () => data.sa());
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO).on("down", () => data.sb());
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE).on("down", () => data.ss());
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q).on("down", () => data.pa());
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W).on("down", () => data.pb());
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A).on("down", () => data.ra());
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S).on("down", () => data.rb());
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D).on("down", () => data.rr());
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z).on("down", () => data.rra());
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X).on("down", () => data.rrb());
+        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C).on("down", () => data.rrr());
 	}
 
 	function update() {
@@ -88,7 +88,7 @@
     }
 
     window.init = function init(size) {
-        const array = Array.from(Array(size).keys());
+        const array = Array.from(Array(size).keys()).map(x => x + 1);
         data.a = array.sort((a, b) => 0.5 - Math.random());
         data.b = [];
         stage.length = data.a.length;
