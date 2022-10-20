@@ -26,16 +26,16 @@ class Data {
 			container.unshift(temp);
 	}
 
-	sa() { this.swap(this.a); }
-	sb() { this.swap(this.b); }
-	ss() { this.swap(this.a) & this.swap(this.b); }
-	pa() { this.push(this.b, this.a); }
-	pb() { this.push(this.a, this.b); }
-	ra() { this.rotate(this.a, false); }
-	rb() { this.rotate(this.b, false); }
-	rr() { this.rotate(this.a, false) & this.rotate(this.b, false); }
-	rra() { this.rotate(this.a, true); }
-	rrb() { this.rotate(this.b, true); }
-	rrr() { this.rotate(this.a, true) & this.rotate(this.b, true); }
+	sa() { this.swap(this.a); return "sa"; }
+	sb() { this.swap(this.b); return "sb"; }
+	ss() { this.swap(this.a) & this.swap(this.b); return "ss"; }
+	pa() { this.push(this.b, this.a); return "pa"; }
+	pb() { this.push(this.a, this.b); return "pb"; }
+	ra() { this.rotate(this.a, false); return "ra"; }
+	rb() { this.rotate(this.b, false); return "rb"; }
+	rr() { this.rotate(this.a, false) & this.rotate(this.b, false); return "rr"; }
+	rra() { this.rotate(this.a, true); return "rra"; }
+	rrb() { this.rotate(this.b, true); return "rrb"; }
+	rrr() { this.rotate(this.a, true) & this.rotate(this.b, true); return "rrr"; }
 }
 export default Data;
