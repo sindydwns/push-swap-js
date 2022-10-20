@@ -88,8 +88,12 @@
     }
 
     window.init = function init(size) {
-        const array = Array.from(Array(size).keys()).map(x => x + 1);
-        data.a = array.sort((a, b) => 0.5 - Math.random());
+        if (typeof(size) == "number") {
+            const array = Array.from(Array(size).keys()).map(x => x + 1);
+            data.a = array.sort((a, b) => 0.5 - Math.random());
+        } else {
+            data.a = [...size];
+        }
         data.b = [];
         stage.length = data.a.length;
     }
