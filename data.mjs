@@ -37,5 +37,15 @@ class Data {
 	rra() { this.rotate(this.a, true); return "rra"; }
 	rrb() { this.rotate(this.b, true); return "rrb"; }
 	rrr() { this.rotate(this.a, true) & this.rotate(this.b, true); return "rrr"; }
+	repeat(commands, times) {
+		const commandArr = [];
+		for (let i = 0; i < times; i++) {
+			const cmds = commands.split(" ");
+			for (let k = 0; k < cmds.length; k++) {
+				commandArr.push(this[cmds[k]]());
+			}
+		}
+		return commandArr.join(" ");
+	}
 }
 export default Data;
