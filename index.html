@@ -145,6 +145,20 @@
 
     window.Data = Data;
 
+    window.test = async (count, retry) => {
+        let sum = 0;
+        let max = 0;
+        let min = 9999999;
+        for (let i = 0; i < retry; i++) {
+            init (count);
+            const cnt = await cmds(func);
+            max = Math.max(max, cnt);
+            min = Math.min(min, cnt);
+            sum += cnt;
+        }
+        return {avg:sum/retry, max, min}
+    }
+
     init(500);
 </script>
 	
