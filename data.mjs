@@ -2,6 +2,7 @@ class Data {
 	constructor(a, b) {
 		this.a = a;
 		this.b = b;
+		this.cmds = [];
 	}
 	swap(container) {
 		if (container.length < 2)
@@ -26,17 +27,61 @@ class Data {
 			container.unshift(temp);
 	}
 
-	sa() { this.swap(this.a); return "sa"; }
-	sb() { this.swap(this.b); return "sb"; }
-	ss() { this.swap(this.a) & this.swap(this.b); return "ss"; }
-	pa() { this.push(this.b, this.a); return "pa"; }
-	pb() { this.push(this.a, this.b); return "pb"; }
-	ra() { this.rotate(this.a, false); return "ra"; }
-	rb() { this.rotate(this.b, false); return "rb"; }
-	rr() { this.rotate(this.a, false) & this.rotate(this.b, false); return "rr"; }
-	rra() { this.rotate(this.a, true); return "rra"; }
-	rrb() { this.rotate(this.b, true); return "rrb"; }
-	rrr() { this.rotate(this.a, true) & this.rotate(this.b, true); return "rrr"; }
+	sa() {
+		this.swap(this.a);
+		this.cmds.push("sa");
+		return "sa";
+	}
+	sb() {
+		this.swap(this.b);
+		this.cmds.push("sb");
+		return "sb";
+	}
+	ss() {
+		this.swap(this.a) & this.swap(this.b);
+		this.cmds.push("ss");
+		return "ss";
+	}
+	pa() {
+		this.push(this.b, this.a);
+		this.cmds.push("pa");
+		return "pa";
+	}
+	pb() {
+		this.push(this.a, this.b);
+		this.cmds.push("pb");
+		return "pb";
+	}
+	ra() {
+		this.rotate(this.a, false);
+		this.cmds.push("ra");
+		return "ra";
+	}
+	rb() {
+		this.rotate(this.b, false);
+		this.cmds.push("rb");
+		return "rb";
+	}
+	rr() {
+		this.rotate(this.a, false) & this.rotate(this.b, false);
+		this.cmds.push("rr");
+		return "rr";
+	}
+	rra() {
+		this.rotate(this.a, true);
+		this.cmds.push("rra");
+		return "rra";
+	}
+	rrb() {
+		this.rotate(this.b, true);
+		this.cmds.push("rrb");
+		return "rrb";
+	}
+	rrr() {
+		this.rotate(this.a, true) & this.rotate(this.b, true);
+		this.cmds.push("rrr");
+		return "rrr";
+	}
 	repeat(commands, times) {
 		const commandArr = [];
 		for (let i = 0; i < times; i++) {
@@ -46,6 +91,9 @@ class Data {
 			}
 		}
 		return commandArr.join(" ");
+	}
+	getCmds() {
+		return [...this.cmds];
 	}
 }
 export default Data;
