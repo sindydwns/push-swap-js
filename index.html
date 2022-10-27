@@ -26,9 +26,11 @@
     
     let game = new Phaser.Game(config);
 	let graphics;
+    let cursors;
 
 	function create() {
 		graphics = this.add.graphics({ lineStyle, fillStyle: nodeStyle});
+        cursors = this.input.keyboard.createCursorKeys();
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N).on("down", (key, e) => {
             const size = prompt("size ?", "10");
             if (+size > 0) {
@@ -53,6 +55,12 @@
 
         if (stage.length == 0)
             return;
+
+        if (cursors.left.isDown)
+            data.reset(1);
+        
+        if (cursors.right.isDown)
+            data.next(1);
 
         const margin = 0;
         const totalHeight = stage.height * 0.7;
@@ -96,6 +104,7 @@
         }
         data.b = [];
         stage.length = data.a.length;
+        stage.nextCmds = [];
     }
     
     window.cmds = async function cmds(strOrFunc, timer) {
@@ -160,6 +169,11 @@
             sum += cnt;
         }
         return {avg:sum/retry, max, min}
+    }
+
+    window.push = async (func) => {
+        const cmds = func(data.a, data.b);
+        data.next = cmds.split(" ").reverse();
     }
 
     init(500);

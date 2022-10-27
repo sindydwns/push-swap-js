@@ -3,6 +3,7 @@ class Data {
 		this.a = a;
 		this.b = b;
 		this.cmds = [];
+		this.nextCmds = [];
 	}
 	swap(container) {
 		if (container.length < 2)
@@ -27,59 +28,70 @@ class Data {
 			container.unshift(temp);
 	}
 
-	sa() {
+	sa(silent) {
 		this.swap(this.a);
-		this.cmds.push("sa");
+		if (silent == null)
+			this.cmds.push("sa");
 		return "sa";
 	}
-	sb() {
+	sb(silent) {
 		this.swap(this.b);
-		this.cmds.push("sb");
+		if (silent == null)
+			this.cmds.push("sb");
 		return "sb";
 	}
-	ss() {
+	ss(silent) {
 		this.swap(this.a) & this.swap(this.b);
-		this.cmds.push("ss");
+		if (silent == null)
+			this.cmds.push("ss");
 		return "ss";
 	}
-	pa() {
+	pa(silent) {
 		this.push(this.b, this.a);
-		this.cmds.push("pa");
+		if (silent == null)
+			this.cmds.push("pa");
 		return "pa";
 	}
-	pb() {
+	pb(silent) {
 		this.push(this.a, this.b);
-		this.cmds.push("pb");
+		if (silent == null)
+			this.cmds.push("pb");
 		return "pb";
 	}
-	ra() {
+	ra(silent) {
 		this.rotate(this.a, false);
-		this.cmds.push("ra");
+		if (silent == null)
+			this.cmds.push("ra");
 		return "ra";
 	}
-	rb() {
+	rb(silent) {
 		this.rotate(this.b, false);
-		this.cmds.push("rb");
+		if (silent == null)
+			this.cmds.push("rb");
 		return "rb";
 	}
-	rr() {
+	rr(silent) {
 		this.rotate(this.a, false) & this.rotate(this.b, false);
-		this.cmds.push("rr");
+		if (silent == null)
+			this.cmds.push("rr");
 		return "rr";
 	}
-	rra() {
+	rra(silent) {
 		this.rotate(this.a, true);
-		this.cmds.push("rra");
+		if (silent == null)
+			this.cmds.push("rra");
 		return "rra";
 	}
-	rrb() {
+	rrb(silent) {
 		this.rotate(this.b, true);
-		this.cmds.push("rrb");
+		if (silent == null)
+			this.cmds.push("rrb");
 		return "rrb";
 	}
-	rrr() {
+	rrr(silent) {
 		this.rotate(this.a, true) & this.rotate(this.b, true);
-		this.cmds.push("rrr");
+		if (silent == null)
+			this.cmds.push("rrr");
 		return "rrr";
 	}
 	repeat(commands, times) {
@@ -91,6 +103,37 @@ class Data {
 			}
 		}
 		return commandArr.join(" ");
+	}
+	next(cnt) {
+		for (let i = 0; i < cnt; i++) {
+			if (this.nextCmds.length == 0)
+				return;
+			const cmd = this.nextCmds.pop();
+			this[cmd]();
+		}
+	}
+	reset(cnt) {
+		const reverseMap = {
+			sa: "sa",
+			sb: "sb",
+			ss: "ss",
+			pb: "pa",
+			pa: "pb",
+			ra: "rra",
+			rb: "rrb",
+			rr: "rrr",
+			rra: "ra",
+			rrb: "rb",
+			rrr: "rr",
+		}
+		for (let i = 0; i < cnt; i++) {
+			if (this.cmds.length == 0)
+				return;
+			const cmd = this.cmds.pop();
+			const reverseCmd = reverseMap[cmd];
+			this[reverseCmd]("slient");
+			this.nextCmds.push(cmd);
+		}
 	}
 	getCmds() {
 		return [...this.cmds];
