@@ -116,18 +116,18 @@
             }
         } else {
             const func = strOrFunc;
-            for (let cmds = func(data.a, data.b); cmds != null && cmds != ""; cmds = func(data.a, data.b)) {
+            const cmds = func(data.a, data.b);
+            if (cmds != null && cmds != "") {
                 const commands = cmds.split(" ");
                 for (let cmd of commands) {
                     if (cmdMap[cmd]) {
                         cnt++;
                         cmdMap[cmd]();
-                    }
-                    else {
+                    } else {
                         console.error(`error: not define cmd [${cmd}]`);
                         return -1;
                     }
-                    if (+timer > 0 || cnt % 1000 == 0)
+                    if (+timer > 0 || cnt % 10000 == 0)
                         await new Promise(x => setTimeout(x, +timer ?? 0));
                 }
             }
@@ -145,13 +145,16 @@
 
     window.Data = Data;
 
-    window.test = async (count, retry) => {
+    window.test = async (func, count, retry) => {
         let sum = 0;
         let max = 0;
         let min = 9999999;
         for (let i = 0; i < retry; i++) {
             init (count);
+            const a = data.a;
             const cnt = await cmds(func);
+            if (isSorted(data.a) == false)
+                return {error: "정렬되지 않는 케이스 발견", data: data.a}
             max = Math.max(max, cnt);
             min = Math.min(min, cnt);
             sum += cnt;
